@@ -1,0 +1,85 @@
+﻿@model ITSwormTestTask.Database.Panel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TestTask</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ITSwormTestTask.styles.css" asp-append-version="true" />
+</head>
+<body>
+    
+    <h4>Панель @Model.Name</h4>
+
+    <div><b>Добавить комплектующие</b></div>
+    <form asp-controller = "Home" asp-action = "PanelDetails" method="post">
+
+      <select name="value" class="form-select" aria-label="Default select example">
+          <option value="1">Крепеж</option>
+          <option value="2">Комплектующие</option>
+      </select>
+
+      <div class="mb-3">
+        <label for="panelId" class="form-label">Id панели</label>
+        <input readonly type="number" name="panelId" class="form-control" value="@Model.Id">
+      </div>
+
+      <div class="mb-3">
+        <label for="Name" class="form-label">Наименование</label>
+        <input type="text" name="name" class="form-control">
+      </div>
+
+      <div class="mb-3">
+        <label for="Amount" class="form-label">Количество</label>
+        <input type="number" name="amount" class="form-control">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br />
+
+    <div><a asp-controller="Home" asp-action="Index">Вернуться к каталогу мебели</a></div>
+    <br />
+
+    <div><b>Список крепежей:</b></div>
+    <table>
+        @foreach(var fastener in Model.Fasteners)
+        {
+            <tr>
+                <td>Наименование:</td>
+                <td>@fastener.Name</td>
+            </tr>
+            <tr>
+                <td>Количество:</td>
+                <td>@fastener.Amount</td>
+            </tr>
+            <tr>
+                <td><a href="../../Home/DeleteFastener/@fastener.Id?pid=@Model.Id">Удалить</a></td>
+            </tr>
+        }
+    </table>
+    <br />
+
+    <div><b>Список комплектующих:</b></div>
+    <table>
+        @foreach(var accessoire in Model.Accessories)
+        {
+            <tr>
+                <td>Наименование:</td>
+                <td>@accessoire.Name</td>
+            </tr>
+            <tr>
+                <td>Количество:</td>
+                <td>@accessoire.Amount</td>
+            </tr>
+            <tr>
+                <td><a href="../../Home/DeleteAccessoire/@accessoire.Id?pid=@Model.Id">Удалить</a></td>
+            </tr>
+        }
+    </table>
+    
+</body>
+</html>

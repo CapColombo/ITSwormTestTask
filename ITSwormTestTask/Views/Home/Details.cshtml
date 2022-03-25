@@ -1,0 +1,46 @@
+﻿@model ITSwormTestTask.Database.Furniture
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TestTask</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ITSwormTestTask.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <h4>Каталог мебели</h4>
+    <h5>@Model.Type</h5>
+
+    <div><b>Добавить панель</b></div>
+    <form asp-controller = "Home" asp-action = "Details" method="post">
+
+      <div class="mb-3">
+        <label for="panelId" class="form-label">Id мебели</label>
+        <input readonly type="number" name="furnitureId" class="form-control" value="@Model.Id">
+      </div>
+
+      <div class="mb-3">
+        <label for="Name" class="form-label">Наименование</label>
+        <input type="text" name="name" class="form-control">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br />
+
+    <div>Список панелей:</div>
+            @foreach(var panel in Model.Panels)
+        {
+            <div>@panel.Name
+                <a href="../../Home/PanelDetails?id=@panel.Id">Подробнее...</a>
+                <a href="../../Home/DeletePanel/@panel.Id?fid=@Model.Id">Удалить</a>
+            </div>
+        }
+
+    <br />
+    <div><a asp-controller="Home" asp-action="Index">Вернуться к каталогу мебели</a></div>
+</body>
+</html>
